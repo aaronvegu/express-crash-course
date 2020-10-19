@@ -2,15 +2,31 @@
 const express = require('express');
 // Traemos path module de nodejs
 const path = require('path');
+// Treamos Express-handlebars para manejar templates
+const exphbs = require('express-handlebars');
 // Traemos nuestra middleware function: logger
 const logger = require('./middleware/logger');
+// Traemos nuestro arreglo de usuarios
+const members = require('./Members');
 
 // Init express
 const app = express();
 
+// Handlebars Middleware
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+app.set('view engine', 'handlebars');
+
 // Body Parser Middleware. Para poder recibir datos json y encoded data mediante POST request
 app.use(express.json()); // Para manejar json
 app.use(express.urlencoded({ extended: false })); // para manejar formularios o url encoded data
+
+// Homepage
+app.get('/', (req, res) =>
+  res.render('index', {
+    title: 'Member App',
+    members,
+  })
+);
 
 // Init middleware function declarada como logger
 // // app.use(logger);

@@ -49,7 +49,8 @@ router.post('/', (req, res) => {
   // Pusheamos el nuevo miembro creado como objeto a nuestro array de miembros
   members.push(newMember);
   // Enviamos como respuesta un JSON con los miembros del array
-  res.json(members);
+  res.json(members); // Lo quitamos para hacer un redireccionamiento al mismo router y no mostrar el objeto JSON
+  // res.redirect('/');
 });
 
 // Actualizar usuario
