@@ -80,4 +80,25 @@ router.put('/:id', (req, res) => {
   }
 });
 
+// Eliminar usuario
+router.delete('/:id', (req, res) => {
+  // Verificamos que el usuario exista
+  const found = members.some((member) => member.id === parseInt(req.params.id));
+
+  // De existir:
+  if (found) {
+    res.json({
+      // Enviamos un mensaje de que el usuario ha sido eliminado
+      mgs: 'Member deleted',
+      // Y filtramos nuestro array de usuarios pasando aquellos que no tienen el id pasado en body del request
+      members: members.filter(
+        (member) => member.id !== parseInt(req.params.id)
+      ),
+    });
+  } else {
+    // de no existir, mandamos un status 400 y un json con el mensaje de error
+    res.status(400).json({ msg: `No member with an id of ${req.params.id}` });
+  }
+});
+
 module.exports = router;
