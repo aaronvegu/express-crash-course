@@ -52,4 +52,32 @@ router.post('/', (req, res) => {
   res.json(members);
 });
 
+// Actualizar usuario
+router.put('/:id', (req, res) => {
+  // Verificamos que el usuario exista
+  const found = members.some((member) => member.id === parseInt(req.params.id));
+
+  // De existir:
+  if (found) {
+    // Guardamos los datos traidos del usuario desde el body del request en la var updateMember
+    const updateMember = req.body;
+    // Ciclamos cada usuario en object members y verificamos que encontremos el id del usuario que queremos editar
+    members.forEach((member) => {
+      // Una vez encontrado, aplicamos un if ternario para verificar que se haya enviado nombre e email, pues podria
+      // ser que solo uno de ellos quiera modificarse y no ambos datos
+      if (member.id === parseInt(req.params.id)) {
+        // si updateMember existe, el nombre del usuario es reemplazado por ese, de lo contrario, se queda igual
+        member.name = updateMember.name ? updateMember.name : member.name;
+        // lo mismo para el email
+        member.email = updateMember.email ? updateMember.email : member.email;
+
+        res.json({ msg: 'Member updated', member });
+      }
+    });
+  } else {
+    // de no existir, mandamos un status 400 y un json con el mensaje de error
+    res.status(400).json({ msg: `No member with an id of ${req.params.id}` });
+  }
+});
+
 module.exports = router;
