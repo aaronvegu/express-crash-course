@@ -1,5 +1,7 @@
 // Traemos express
 const express = require('express');
+// Traemos path module de nodejs
+const path = require('path');
 
 // Init express
 const app = express();
@@ -7,7 +9,8 @@ const app = express();
 // Creamos un route para manejar (route handler) un request GET en home (/)
 // sintaxis: get('path', callback)
 app.get('/', (req, res) => {
-  res.send('<h1>Hello world!</h1>'); // Tomamos el objeto res y su metodo send para enviar una respuesta al browser
+  // Enviando archivos como respuesta al browser
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Definimos el puerto con opcion a puerto de desarollo del deploy server
