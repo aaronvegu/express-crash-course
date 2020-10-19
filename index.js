@@ -2,8 +2,6 @@
 const express = require('express');
 // Traemos path module de nodejs
 const path = require('path');
-// Traemos nuestro array de usuarios
-const members = require('./Members');
 // Traemos nuestra middleware function: logger
 const logger = require('./middleware/logger');
 
@@ -15,11 +13,6 @@ const app = express();
 // Aqui con use disparamos nuestra middleware function logger, que sera disparada cada que un request
 // llega al server
 
-// API Route para obtener los usuarios de nuestro array
-app.get('/api/members', (req, res) => {
-  res.json(members); // Para retornar JSON
-});
-
 // Creamos un folder para archivos estaticos
 app.use(express.static(path.join(__dirname, 'public')));
 /**
@@ -27,6 +20,9 @@ app.use(express.static(path.join(__dirname, 'public')));
  * que se encuentran dentro de la carpeta que hemos declarado como parametro con join de path,
  * manejando diferentes tipos de extensiones y archivos de manera automatica
  */
+
+// Ruta a la API de usuarios
+app.use('/api/members/', require('./routes/api/members'));
 
 // Definimos el puerto con opcion a puerto de desarollo del deploy server
 const PORT = process.env.PORT || 5000;
