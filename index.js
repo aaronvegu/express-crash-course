@@ -8,6 +8,10 @@ const logger = require('./middleware/logger');
 // Init express
 const app = express();
 
+// Body Parser Middleware. Para poder recibir datos json y encoded data mediante POST request
+app.use(express.json()); // Para manejar json
+app.use(express.urlencoded({ extended: false })); // para manejar formularios o url encoded data
+
 // Init middleware function declarada como logger
 // // app.use(logger);
 // Aqui con use disparamos nuestra middleware function logger, que sera disparada cada que un request
