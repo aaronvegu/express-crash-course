@@ -2,9 +2,23 @@
 const express = require('express');
 // Traemos path module de nodejs
 const path = require('path');
+// Traemos nuestro array de usuarios
+const members = require('./Members');
+// Traemos nuestra middleware function: logger
+const logger = require('./middleware/logger');
 
 // Init express
 const app = express();
+
+// Init middleware function declarada como logger
+// // app.use(logger);
+// Aqui con use disparamos nuestra middleware function logger, que sera disparada cada que un request
+// llega al server
+
+// API Route para obtener los usuarios de nuestro array
+app.get('/api/members', (req, res) => {
+  res.json(members); // Para retornar JSON
+});
 
 // Creamos un folder para archivos estaticos
 app.use(express.static(path.join(__dirname, 'public')));
